@@ -32,10 +32,10 @@ public class ShapeActor extends Actor {
 
         sr.begin(ShapeRenderer.ShapeType.Filled);
         for (Line line : lines) {
-            float x1 = line.p1.x + getX() * this.getScaleX();
-            float x2 = line.p2.x + getX() * this.getScaleX();
-            float y1 = line.p1.y + getY() * this.getScaleY();
-            float y2 = line.p1.y + getY() * this.getScaleY();
+            float x1 = (line.p1.x * this.getScaleX()) + getX();
+            float x2 = (line.p2.x * this.getScaleX()) + getX();
+            float y1 = (line.p1.y * this.getScaleY()) + getY();
+            float y2 = (line.p2.y * this.getScaleY()) + getY();
 
             sr.line(x1, y1, x2, y2);
         }
@@ -44,5 +44,9 @@ public class ShapeActor extends Actor {
 
     public void setModel(ShapeModel model) {
         this.model = model;
+    }
+
+    public void setLineThickness(float num) {
+        model.setLineThickness(num);
     }
 }

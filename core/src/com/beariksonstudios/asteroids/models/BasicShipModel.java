@@ -12,8 +12,9 @@ public class BasicShipModel extends ShapeModel {
 
 
     public BasicShipModel() {
-        addLine(new Line(new Vector2(-0.5f, -0.5f), new Vector2(0.0f, 1.0f)));
-        addLine(new Line(new Vector2(0.0f, 1.0f), new Vector2(0.5f, 0.5f)));
-        addLine(new Line(new Vector2(0.5f, 0.5f), new Vector2(-0.5f, -0.5f)));
+        addLine(new Line(new Vector2(-0.5f, -1f), new Vector2(0.0f, 1.0f)));
+        addLine(new Line(new Vector2(0.0f, 1.0f), new Vector2(0.5f, -1f)));
+        addLine(new Line(new Vector2(0.5f, -1f), new Vector2(0.0f, -0.5f)));
+        addLine(new Line(new Vector2(0.0f, -0.5f), new Vector2(-0.5f, -1f)));
     }
 }

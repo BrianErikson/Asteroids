@@ -22,12 +22,14 @@ public class AsteroidMain extends ApplicationAdapter {
 
 		player = new PlayerShip(shapeRenderer);
 		player.setPosition(Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() / 2.0f);
+		player.setScale(100);
+		player.setLineThickness(5f);
 		stage.addActor(player);
 	}
 
 	@Override
 	public void render () {
-		Gdx.gl.glClearColor(1, 0, 0, 1);
+		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
 		stage.draw();
