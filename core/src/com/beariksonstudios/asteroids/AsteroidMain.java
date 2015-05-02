@@ -21,21 +21,22 @@ public class AsteroidMain extends ApplicationAdapter {
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
 
-		player = new PlayerShip(shapeRenderer);
+		player = new PlayerShip(50f);
 		player.setPosition(Gdx.graphics.getWidth() / 2.0f, Gdx.graphics.getHeight() / 2.0f);
 		player.setScale(10);
-		player.setLineThickness(5f);
+		player.setLineThickness(1f);
 		stage.addActor(player);
 	}
 
 	@Override
 	public void render () {
-		if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-			player.setThrust(7.5f);
-		} else {player.setVelocity(0f,0f);}
+		if (Gdx.input.isKeyPressed(Input.Keys.W)) player.accelerate();
+		else if (Gdx.input.isKeyPressed(Input.Keys.S)) player.decelerate();
 
 		if (Gdx.input.isKeyPressed(Input.Keys.D)) player.rotateBy(-5f);
 		else if (Gdx.input.isKeyPressed(Input.Keys.A)) player.rotateBy(5f);
+
+		if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) player.shoot();
 
 
 		Gdx.gl.glClearColor(0, 0, 0, 1);

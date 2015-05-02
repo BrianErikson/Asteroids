@@ -15,7 +15,6 @@ import java.util.ArrayList;
  * Created by Brian on 5/1/2015.
  */
 public class ShapeActor extends Actor {
-    private ShapeRenderer sr;
     private ShapeModel model;
 
     private Matrix3 transform;
@@ -25,8 +24,9 @@ public class ShapeActor extends Actor {
     private Vector2 velocity;
     private boolean isDirty;
 
-    public ShapeActor(ShapeRenderer shapeRenderer) {
-        sr = shapeRenderer;
+    public ShapeActor() {
+        this.setDebug(true);
+
         velocity = new Vector2(0,0);
         transform = new Matrix3().idt();
         translation = new Matrix3().idt();
@@ -38,8 +38,8 @@ public class ShapeActor extends Actor {
     public void act(float delta) {
         super.act(delta);
 
-        Vector2 pos = new Vector2(this.getX() + velocity.x, this.getY() + velocity.y);
-        this.setPosition(this.getX() + velocity.x, this.getY() + velocity.y);
+        float dt = Gdx.graphics.getDeltaTime();
+        this.setPosition(this.getX() + (velocity.x * dt), this.getY() + (velocity.y * dt));
 
         updateTransform();
     }
@@ -47,20 +47,25 @@ public class ShapeActor extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         super.draw(batch, parentAlpha);
+    }
 
+    /**
+     * Draws this actor's debug lines if {@link #getDebug()} is true.
+     *
+     * @param shapes
+     */
+    @Override
+    public void drawDebug(ShapeRenderer shapes) {
         ArrayList<Line> lines = model.getLines();
 
         Gdx.gl.glLineWidth(model.getLineThickness());
 
-        sr.begin(ShapeRenderer.ShapeType.Filled);
-        Vector2 pos = this.getPosition();
         for (Line line : lines) {
             Vector2 p1 = line.p1.cpy().mul(transform);
             Vector2 p2 = line.p2.cpy().mul(transform);
 
-            sr.line(p1.x, p1.y, p2.x, p2.y);
+            shapes.line(p1.x, p1.y, p2.x, p2.y);
         }
-        sr.end();
     }
 
     public void setModel(ShapeModel model) {
@@ -90,7 +95,6 @@ public class ShapeActor extends Actor {
             transform.mul(translation);
             transform.mul(rotation);
             transform.mul(scale);
-            //System.out.println(transform);
             isDirty = false;
         }
     }
@@ -130,6 +134,11 @@ public class ShapeActor extends Actor {
     @Override
     public void setPosition(float x, float y) {
         translation.setToTranslation(x, y);
+        isDirty = true;
+    }
+
+    public void setPosition(Vector2 pos) {
+        translation.setToTranslation(pos);
         isDirty = true;
     }
 
@@ -198,5 +207,13 @@ public class ShapeActor extends Actor {
     public void rotateBy(float amountInDegrees) {
         rotation.setToRotation(rotation.getRotation() + amountInDegrees);
         isDirty = true;
+    }
+
+    public Matrix3 getTransform() {
+        return transform;
+    }
+
+    public Vector2 projectVec2(Vector2 vec) {
+        return vec.mul(transform);
     }
 }
