@@ -1,6 +1,7 @@
 package com.beariksonstudios.asteroids.actors;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Vector2;
 import com.beariksonstudios.asteroids.models.BasicShipModel;
 
 /**
@@ -12,5 +13,11 @@ public class PlayerShip extends ShapeActor {
         super(shapeRenderer);
 
         this.setModel(new BasicShipModel());
+    }
+
+    public void setThrust(float amt) {
+        Vector2 vec = new Vector2(0, amt);
+        vec.rotate(this.getRotation());
+        this.setVelocity(vec);
     }
 }
