@@ -68,6 +68,10 @@ public class ShapeActor extends Actor {
         }
     }
 
+    public ShapeModel getModel() {
+        return this.model;
+    }
+
     public void setModel(ShapeModel model) {
         this.model = model;
     }
@@ -216,4 +220,12 @@ public class ShapeActor extends Actor {
     public Vector2 projectVec2(Vector2 vec) {
         return vec.mul(transform);
     }
+
+    /*Input*/
+    public void forward() {}
+    public void backward() {}
+    public void left() {}
+    public void right() {}
+    public void action1() {}
+    public void action2() {}
 }
