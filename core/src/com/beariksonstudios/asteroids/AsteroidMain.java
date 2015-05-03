@@ -11,17 +11,17 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.beariksonstudios.asteroids.actors.Asteroid;
 import com.beariksonstudios.asteroids.actors.PlayerShip;
+import com.beariksonstudios.asteroids.core.AStage;
 import com.beariksonstudios.asteroids.core.ActorInputProcessor;
 
 public class AsteroidMain extends ApplicationAdapter {
-	Stage stage;
+	AStage stage;
 	ShapeRenderer shapeRenderer;
 	PlayerShip player;
 
 	@Override
 	public void create () {
-		stage = new Stage();
-		Gdx.input.setInputProcessor(stage);
+		stage = new AStage(20f);
 		shapeRenderer = new ShapeRenderer();
 		shapeRenderer.setProjectionMatrix(stage.getCamera().combined);
 

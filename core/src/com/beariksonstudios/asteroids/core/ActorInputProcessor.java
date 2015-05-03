@@ -2,14 +2,12 @@ package com.beariksonstudios.asteroids.core;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
-import com.badlogic.gdx.InputProcessor;
-import com.beariksonstudios.asteroids.actors.ShapeActor;
 
 /**
  * Created by Brian on 5/2/2015.
  */
 public class ActorInputProcessor {
-    public static void handleInput(ShapeActor actor) {
+    public static void handleInput(AActor actor) {
         if (Gdx.input.isKeyPressed(Input.Keys.W)) actor.forward();
         else if (Gdx.input.isKeyPressed(Input.Keys.S)) actor.backward();
 
