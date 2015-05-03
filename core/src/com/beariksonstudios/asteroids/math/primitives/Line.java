@@ -13,4 +13,9 @@ public class Line {
         this.p1 = p1;
         this.p2 = p2;
     }
+
+    public Line(float x1, float y1, float x2, float y2) {
+        this.p1 = new Vector2(x1, y1);
+        this.p2 = new Vector2(x2, y2);
+    }
 }

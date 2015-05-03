@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.beariksonstudios.asteroids.actors.Asteroid;
 import com.beariksonstudios.asteroids.actors.PlayerShip;
 import com.beariksonstudios.asteroids.core.ActorInputProcessor;
 
@@ -29,6 +30,13 @@ public class AsteroidMain extends ApplicationAdapter {
 		player.setScale(10);
 		player.setLineThickness(1f);
 		stage.addActor(player);
+
+		Asteroid asteroid = new Asteroid();
+		asteroid.setPosition(Gdx.graphics.getWidth() / 1.5f, Gdx.graphics.getHeight() / 1.5f);
+		asteroid.setRotationSpeed(10f);
+		asteroid.setScale(20f);
+		asteroid.setLineThickness(1f);
+		stage.addActor(asteroid);
 	}
 
 	@Override

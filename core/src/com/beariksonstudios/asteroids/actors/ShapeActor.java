@@ -21,13 +21,19 @@ public class ShapeActor extends Actor {
     private Matrix3 translation;
     private Matrix3 rotation;
     private Matrix3 scale;
+
     private Vector2 velocity;
+
+    // Rotation speed in degrees
+    private float rotSpeed;
+
     private boolean isDirty;
 
     public ShapeActor() {
         this.setDebug(true);
 
         velocity = new Vector2(0,0);
+        rotSpeed = 0f;
         transform = new Matrix3().idt();
         translation = new Matrix3().idt();
         rotation = new Matrix3().idt();
@@ -40,6 +46,7 @@ public class ShapeActor extends Actor {
 
         float dt = Gdx.graphics.getDeltaTime();
         this.setPosition(this.getX() + (velocity.x * dt), this.getY() + (velocity.y * dt));
+        this.setRotation(this.getRotation() + (rotSpeed * dt));
 
         updateTransform();
     }
@@ -219,6 +226,14 @@ public class ShapeActor extends Actor {
 
     public Vector2 projectVec2(Vector2 vec) {
         return vec.mul(transform);
+    }
+
+    public float getRotationSpeed() {
+        return rotSpeed;
+    }
+
+    public void setRotationSpeed(float rotSpeed) {
+        this.rotSpeed = rotSpeed;
     }
 
     /*Input*/

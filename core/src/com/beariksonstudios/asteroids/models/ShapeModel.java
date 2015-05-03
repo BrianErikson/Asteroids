@@ -24,6 +24,8 @@ public class ShapeModel {
         lines.add(line);
     }
 
+    public void addLine(float x1, float y1, float x2, float y2) { lines.add(new Line(x1, y1, x2, y2)); }
+
     public void setLines(ArrayList<Line> lines) {
         this.lines = lines;
     }
