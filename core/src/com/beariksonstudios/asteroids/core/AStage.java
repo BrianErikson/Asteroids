@@ -15,6 +15,7 @@ import com.badlogic.gdx.utils.*;
 import com.badlogic.gdx.utils.viewport.ScalingViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.beariksonstudios.asteroids.core.AActor;
+import com.beariksonstudios.asteroids.math.physics.Cell;
 
 import java.util.ArrayList;
 
@@ -27,6 +28,9 @@ public class AStage implements Disposable {
     private final ShapeRenderer renderer = new ShapeRenderer();
     private final ArrayList<AActor> actors;
     private boolean actionsRequestRendering = true;
+
+    private float cellSize;
+    private Cell[][] grid;
 
     /**
      * Creates a AStage with a {@link ScalingViewport} set to {@link Scaling#stretch}. The AStage will use its own {@link ShapeRenderer}
@@ -45,6 +49,11 @@ public class AStage implements Disposable {
         if (viewport == null) throw new IllegalArgumentException("viewport cannot be null.");
         this.gutterDepth = gutterDepth;
         this.viewport = viewport;
+
+        this.cellSize = 200f;
+        int columns = (int) Math.floor(Gdx.graphics.getHeight()/cellSize);
+        int rows = (int) Math.floor(Gdx.graphics.getWidth()/cellSize);
+        this.grid = new Cell[columns][rows];
 
         actors = new ArrayList<AActor>();
 
@@ -84,11 +93,21 @@ public class AStage implements Disposable {
             float w = Gdx.graphics.getWidth();
             float h = Gdx.graphics.getHeight();
 
+            // gutter wrap-around
             if (pos.x > w + gutterDepth) actor.setPosition(-gutterDepth + 1, actor.getY());
             else if (pos.x < -gutterDepth) actor.setPosition(w + gutterDepth - 1, actor.getY());
 
             if (pos.y > h + gutterDepth) actor.setPosition(actor.getX(), -gutterDepth + 1);
             else if (pos.y < -gutterDepth) actor.setPosition(actor.getX(), h + gutterDepth - 1);
+
+            // set cells
+            /*Cell cell = getCell(actor.getX(),actor.getY());
+            if (actor.getCell() != cell.getID()) {
+                // TODO: Remove from current cell and add to new one
+            }*/
+
+            // hit check
+
 
             actor.act(delta);
         }
@@ -206,5 +225,11 @@ public class AStage implements Disposable {
     public void dispose() {
         clear();
         renderer.dispose();
+    }
+
+    public Cell getCell(float x, float y) {
+        int column = (int) Math.floor(Gdx.graphics.getHeight()/cellSize);
+        int row = (int) Math.floor(Gdx.graphics.getWidth()/cellSize);
+        return grid[column][row];
     }
 }

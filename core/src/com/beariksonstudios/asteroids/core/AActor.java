@@ -22,9 +22,11 @@ public class AActor {
     private Matrix3 scale;
 
     private Vector2 velocity;
-
     // Rotation speed in degrees
     private float rotSpeed;
+    // cell for collision testing
+    private int cell = 0;
+    private int cellIndex = 0;
 
     private boolean isDirty;
 
@@ -234,5 +236,21 @@ public class AActor {
 
     public void setStage(AStage stage) {
         this.stage = stage;
+    }
+
+    public int getCell() {
+        return cell;
+    }
+
+    public void setCell(int cell) {
+        this.cell = cell;
+    }
+
+    public int getCellIndex() {
+        return cellIndex;
+    }
+
+    public void setCellIndex(int cellIndex) {
+        this.cellIndex = cellIndex;
     }
 }

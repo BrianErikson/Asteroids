@@ -8,6 +8,6 @@ import com.beariksonstudios.asteroids.models.AsteroidModel;
  */
 public class Asteroid extends AActor {
     public Asteroid() {
-        this.setModel(new AsteroidModel());
+        this.setModel(new AsteroidModel(30, 0.2f));
     }
 }
