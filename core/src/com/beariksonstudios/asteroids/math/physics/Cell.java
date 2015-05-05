@@ -23,7 +23,7 @@ public class Cell {
 
     public void addActor(AActor actor) {
         actor.setCellIndex(this.actors.size());
-        actor.setCell(ID);
+        actor.setCell(this);
         this.actors.add(actor);
     }
 

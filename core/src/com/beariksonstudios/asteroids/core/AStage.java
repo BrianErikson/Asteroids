@@ -31,6 +31,8 @@ public class AStage implements Disposable {
 
     private float cellSize;
     private Cell[][] grid;
+    private int cellRows;
+    private int cellColumns;
 
     /**
      * Creates a AStage with a {@link ScalingViewport} set to {@link Scaling#stretch}. The AStage will use its own {@link ShapeRenderer}
@@ -50,10 +52,18 @@ public class AStage implements Disposable {
         this.gutterDepth = gutterDepth;
         this.viewport = viewport;
 
-        this.cellSize = 200f;
-        int columns = (int) Math.floor(Gdx.graphics.getHeight()/cellSize);
-        int rows = (int) Math.floor(Gdx.graphics.getWidth()/cellSize);
-        this.grid = new Cell[columns][rows];
+        this.cellSize = 100f;
+        cellColumns = (int) Math.floor(Gdx.graphics.getHeight()/cellSize);
+        cellRows = (int) Math.floor(Gdx.graphics.getWidth()/cellSize);
+        System.out.println("Creating physics grid with " + cellColumns + " Columns and " + cellRows + " Rows");
+        int count = 0;
+        this.grid = new Cell[cellColumns][cellRows];
+        for (int i = 0; i < cellColumns; i++) {
+            for (int q = 0; q < cellRows; q++) {
+                this.grid[i][q] = new Cell(count);
+                count++;
+            }
+        }
 
         actors = new ArrayList<AActor>();
 
@@ -101,10 +111,18 @@ public class AStage implements Disposable {
             else if (pos.y < -gutterDepth) actor.setPosition(actor.getX(), h + gutterDepth - 1);
 
             // set cells
-            /*Cell cell = getCell(actor.getX(),actor.getY());
-            if (actor.getCell() != cell.getID()) {
-                // TODO: Remove from current cell and add to new one
-            }*/
+            Cell cell = getCell(actor.getX(), actor.getY());
+            if (cell != null) {
+                if (actor.getCell() == null) cell.addActor(actor);
+                Cell aCell = actor.getCell();
+                if (aCell.getID() != cell.getID()) {
+                    aCell.removeActor(actor);
+                    cell.addActor(actor);
+                }
+            } else if (actor.getCell() != null){
+                actor.getCell().removeActor(actor);
+                actor.setCell(null);
+            }
 
             // hit check
 
@@ -227,9 +245,17 @@ public class AStage implements Disposable {
         renderer.dispose();
     }
 
+    // Returns the correct cell given a world position, or null if in gutter
     public Cell getCell(float x, float y) {
-        int column = (int) Math.floor(Gdx.graphics.getHeight()/cellSize);
-        int row = (int) Math.floor(Gdx.graphics.getWidth()/cellSize);
-        return grid[column][row];
+        int curColumn = (int) Math.floor(y/cellSize);
+        int curRow = (int) Math.floor(x/cellSize);
+
+        if (curRow < 0) curRow = 0;
+        else if (curRow >= cellRows) curRow = cellRows - 1; // 0-index offset
+
+        if (curColumn < 0) curColumn = 0;
+        else if (curColumn >= cellColumns) curColumn = cellColumns - 1; // 0-index offset
+
+        return grid[curColumn][curRow];
     }
 }

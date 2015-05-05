@@ -37,6 +37,13 @@ public class AsteroidMain extends ApplicationAdapter {
 		asteroid.setScale(20f);
 		asteroid.setLineThickness(1f);
 		stage.addActor(asteroid);
+
+		Asteroid asteroid1 = new Asteroid();
+		asteroid1.setPosition(Gdx.graphics.getWidth() / 3.5f, Gdx.graphics.getHeight() / 3.5f);
+		asteroid1.setRotationSpeed(10f);
+		asteroid1.setScale(20f);
+		asteroid1.setLineThickness(1f);
+		stage.addActor(asteroid1);
 	}
 
 	@Override

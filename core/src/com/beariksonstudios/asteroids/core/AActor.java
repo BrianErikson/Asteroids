@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Matrix3;
 import com.badlogic.gdx.math.Vector2;
+import com.beariksonstudios.asteroids.math.physics.Cell;
 import com.beariksonstudios.asteroids.math.primitives.Line;
 import com.beariksonstudios.asteroids.models.ShapeModel;
 
@@ -25,7 +26,7 @@ public class AActor {
     // Rotation speed in degrees
     private float rotSpeed;
     // cell for collision testing
-    private int cell = 0;
+    private Cell cell;
     private int cellIndex = 0;
 
     private boolean isDirty;
@@ -238,11 +239,11 @@ public class AActor {
         this.stage = stage;
     }
 
-    public int getCell() {
+    public Cell getCell() {
         return cell;
     }
 
-    public void setCell(int cell) {
+    public void setCell(Cell cell) {
         this.cell = cell;
     }
 
